@@ -52,7 +52,7 @@ class Playground {
 	+GetNbRows() : int
 	-nbCols : int
 	-nbRows : int
-	+SetFruit(Fruit* newFruit) : void
+	+DeleteFruit() : void
 	+SpawnFruit() : void
 }
 
@@ -72,12 +72,12 @@ class PlaygroundRenderer {
 	-snakeHeadTextures : SDL_Texture*
 	-snakeTailTextures : SDL_Texture*
 	-tilesTextures : SDL_Texture*
-	-GenerateBackground() : int
 	+Init(SDL_Renderer* renderer, SDL_Rect drawZone) : int
 	-InitFruitsTextures() : int
 	-InitSnakeTextures() : int
 	-InitTilesTextures() : int
 	-tileSize : int
+	-GenerateBackground() : void
 	+SetPlayground(Playground* playground) : void
 	+draw() : void
 	-drawBackground() : void
