@@ -8,6 +8,9 @@ ScoreRenderer::ScoreRenderer(){
 }
 
 ScoreRenderer::~ScoreRenderer(){
+    for(int i=0; i<sizeof(iconsTextures) / sizeof(iconsTextures[0]);i++){
+        SDL_DestroyTexture(iconsTextures[i]);
+    }
 }
 
 int ScoreRenderer::Init(SDL_Renderer* renderer, SDL_Rect drawZone){

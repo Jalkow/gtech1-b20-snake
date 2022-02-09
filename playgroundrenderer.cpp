@@ -43,6 +43,10 @@ PlaygroundRenderer::~PlaygroundRenderer(){
     for(int i=0; i<sizeof(tilesTextures) / sizeof(tilesTextures[0]);i++){
         SDL_DestroyTexture(tilesTextures[i]);
     }
+
+    if(bgTexture != NULL){
+        SDL_DestroyTexture(bgTexture);
+    }
 }
 
 //dessine le cadrillage, le fruit et le snake.
@@ -156,17 +160,15 @@ SDL_Texture* PlaygroundRenderer::LoadTexture(const std::string* filename){
 }
 
 //dessine le cadrillage sur une texture et enregistre cette dernière dans l'attribut bgTexture
-int PlaygroundRenderer::GenerateBackground(){
+void PlaygroundRenderer::GenerateBackground(){
     srand(time(NULL));
     SDL_Texture* randomTileTexture;
+    if(bgTexture != NULL){
+        SDL_DestroyTexture(bgTexture);
+    }
 
     bgTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888,
 		SDL_TEXTUREACCESS_TARGET, drawZone.w, drawZone.h);
-    
-    if(bgTexture == NULL){
-        printf("Problem with creating texture : %s\n", SDL_GetError());
-        return EXIT_FAILURE;
-    }
 
 	SDL_SetRenderTarget(renderer, bgTexture);
 
@@ -196,7 +198,6 @@ int PlaygroundRenderer::GenerateBackground(){
     }
 	
 	SDL_SetRenderTarget(renderer, NULL);
-    return EXIT_SUCCESS;
 }
 
 //initialise les attributs snakeHeadTextures, snakeHeadTextures et snakeTailTextures qui sont utilisés pour dessiner le serpent

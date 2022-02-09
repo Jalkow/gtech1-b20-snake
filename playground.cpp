@@ -10,6 +10,7 @@ Playground::Playground(int nbRows, int nbCols, Snake* snake){
 }
 
 Playground::~Playground(){
+    delete presentFruit;
 }
 
 int Playground::GetNbCols(){
@@ -28,8 +29,9 @@ Snake* Playground::GetSnake(){
     return snake;
 }
 
-void Playground::SetFruit(Fruit* newFruit){
-    presentFruit = newFruit;
+void Playground::DeleteFruit(){
+    delete presentFruit;
+    presentFruit = NULL;
 }
 
 //crée un nouveau fruit avec des attributs aléatoire

@@ -11,6 +11,9 @@ MainSDLWindow::MainSDLWindow(void){
     this->playground = NULL;
     this->mainSnake = NULL;
     this->score = NULL;
+    this->outsideMainLoopFont = NULL;
+    this->outsideMainLoopSmallFont = NULL;
+    this->pixelizedFont = NULL;
     this->scoreGraphics = new ScoreRenderer();
     this->playgroundGraphics = new PlaygroundRenderer();
 }
@@ -20,6 +23,15 @@ MainSDLWindow::~MainSDLWindow(void){
     SDL_DestroyWindow(this->window);
     delete playgroundGraphics;
     delete scoreGraphics;
+    if(outsideMainLoopFont != NULL){
+        TTF_CloseFont(outsideMainLoopFont);
+    }
+    if(outsideMainLoopSmallFont != NULL){
+        TTF_CloseFont(outsideMainLoopSmallFont);
+    }
+    if(pixelizedFont != NULL){
+        TTF_CloseFont(pixelizedFont);
+    }
     TTF_Quit();
     SDL_Quit();
 }
@@ -104,8 +116,13 @@ void MainSDLWindow::Run(){
         score = new Score();
         scoreGraphics->SetScore(score);
 
-        if (!WaitForPlayerReady())
+        if (!WaitForPlayerReady()){
+            delete mainSnake;
+            delete playground;
+            delete score;
             return;
+        }
+            
  
         ///////////////////
         //    MAIN LOOP  //
@@ -117,6 +134,9 @@ void MainSDLWindow::Run(){
             Uint32 frameTimeStart = SDL_GetTicks();
 
             if (!HandleMainLoopEvents()){
+                delete mainSnake;
+                delete playground;
+                delete score;
                 return;
             }
 

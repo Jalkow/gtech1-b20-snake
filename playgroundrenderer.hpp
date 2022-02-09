@@ -18,7 +18,7 @@ class PlaygroundRenderer{
         void draw();
 
     private:
-        int GenerateBackground();
+        void GenerateBackground();
         int InitSnakeTextures();
         int InitFruitsTextures();
         int InitTilesTextures();

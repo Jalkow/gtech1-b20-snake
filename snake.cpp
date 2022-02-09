@@ -142,7 +142,13 @@ Snake::Snake(int startingRow, int startingCol, Direction startingDirection, int 
 }
 
 Snake::~Snake(){
-
+    Segment* actualSegment = head;
+    Segment* nextSegment;
+    while(actualSegment != NULL){
+        nextSegment = actualSegment->GetNext();
+        delete actualSegment;
+        actualSegment = nextSegment;
+    }
 }
 
 //change la direction du serpent en changeant la direction de sa tête, à part si cette direction amenerait le serpent à
@@ -198,7 +204,7 @@ bool Snake::Move(Playground* playground, Score* score, int* framerate){
     if (head->GetRow() == playground->GetFruit()->GetRow() && head->GetCol() == playground->GetFruit()->GetCol())
     {
         snakeIsGrowing = Eat(playground->GetFruit(), score, framerate);
-        playground->SetFruit(NULL);
+        playground->DeleteFruit();
     }
 
     //avec la création de la nouvelle tête, le serpent a grandit de 1. Si on veut seulement se déplacer, il faut alors
@@ -207,14 +213,14 @@ bool Snake::Move(Playground* playground, Score* score, int* framerate){
     if (!snakeIsGrowing)
     {
         Segment* actualSegment = head;
-        Segment* previousSegment = nullptr;
-        while (actualSegment->GetNext() != nullptr){
+        Segment* previousSegment = NULL;
+        while (actualSegment->GetNext() != NULL){
             previousSegment = actualSegment;
             actualSegment = actualSegment->GetNext();
         }
 
-        if (previousSegment != nullptr){
-            previousSegment->SetNext(nullptr);
+        if (previousSegment != NULL){
+            previousSegment->SetNext(NULL);
             delete actualSegment;
         }
     }
@@ -268,7 +274,6 @@ bool Snake::Eat(Fruit* fruitToEat, Score* score, int* framerate){
             break;
     }
 
-    delete fruitToEat;
     return snakeGrows;
 }
 
