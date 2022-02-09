@@ -350,7 +350,7 @@ bool MainSDLWindow::ShowGameOver(){
         while (SDL_PollEvent(&event)){
             if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE)
                 return false;
-            if (event.type == SDL_MOUSEBUTTONDOWN){
+            else if (event.type == SDL_MOUSEBUTTONDOWN){
                 if(event.button.button == SDL_BUTTON_LEFT
                     && event.button.x >= endYesPlacement.x
                     && event.button.x <= endYesPlacement.x + endYesPlacement.w
@@ -364,6 +364,14 @@ bool MainSDLWindow::ShowGameOver(){
                         && event.button.y >= endNoPlacement.y
                         && event.button.y <= endNoPlacement.y + endNoPlacement.h){
                             return false;
+                }
+            }
+            else if (event.type == SDL_KEYDOWN){
+                if (event.key.keysym.scancode == SDL_SCANCODE_Y){
+                    return true;
+                }
+                else if(event.key.keysym.scancode == SDL_SCANCODE_N){
+                    return false;
                 }
             }
         }
